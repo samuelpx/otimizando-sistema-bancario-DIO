@@ -1,7 +1,7 @@
 # Func Defs:
 
-def menu():
 
+def menu():
     menu = """
     [d] Depositar
     [s] Sacar
@@ -16,7 +16,6 @@ def menu():
 
 
 def main():
-
     saldo = 0
     limite = 500
     extrato = []
@@ -27,7 +26,6 @@ def main():
     contas = []
 
     while True:
-
         opcao = menu()
 
         if opcao == "d":
@@ -36,12 +34,14 @@ def main():
 
         if opcao == "s":
             valor_saque = float(input("Insira o valor a ser sacado:"))
-            saldo, extrato = sacar(saldo=saldo,
-                                   valor_saque=valor_saque,
-                                   extrato=extrato,
-                                   limite=limite,
-                                   numero_saques=numero_saques,
-                                   LIMITE_SAQUES=LIMITE_SAQUES)
+            saldo, extrato = sacar(
+                saldo=saldo,
+                valor_saque=valor_saque,
+                extrato=extrato,
+                limite=limite,
+                numero_saques=numero_saques,
+                LIMITE_SAQUES=LIMITE_SAQUES,
+            )
 
         if opcao == "e":
             emitir_extrato(saldo, extrato=extrato)
@@ -59,8 +59,8 @@ def main():
 def depositar(saldo, valor_deposito, extrato, /):
     if valor_deposito > 0:
         saldo += valor_deposito
-        extrato.append(f'DEPÓSITO: R${valor_deposito:.2f}')
-        print(f'O depósito de R${valor_deposito:.2f} foi feito!')
+        extrato.append(f"DEPÓSITO: R${valor_deposito:.2f}")
+        print(f"O depósito de R${valor_deposito:.2f} foi feito!")
     else:
         print("Esse não é um valor válido, tente novamente.")
 
@@ -68,18 +68,19 @@ def depositar(saldo, valor_deposito, extrato, /):
 
 
 def sacar(*, saldo, valor_saque, extrato, limite, numero_saques, LIMITE_SAQUES):
-
     if numero_saques < LIMITE_SAQUES:
         if valor_saque > 0:
             if valor_saque > limite:
-                print(f'O valor do saque excede o limite, tente novamente.\nLembre-se de que seu limite para saques é de {limite}.')
+                print(
+                    f"O valor do saque excede o limite, tente novamente.\nLembre-se de que seu limite para saques é de {limite}."
+                )
             elif valor_saque > saldo:
                 print("O valor do saque excede o seu saldo, tente novamente.")
             else:
                 numero_saques += 1
                 saldo -= int(valor_saque)
-                extrato.append(f'SAQUE: R${valor_saque:.2f}')
-                print(f'Saque de R${valor_saque:.2f} efetuado.')
+                extrato.append(f"SAQUE: R${valor_saque:.2f}")
+                print(f"Saque de R${valor_saque:.2f} efetuado.")
         else:
             print("O valor do saque deve ser maior que zero!\nTente novamente!")
     else:
@@ -90,7 +91,7 @@ def sacar(*, saldo, valor_saque, extrato, limite, numero_saques, LIMITE_SAQUES):
 def emitir_extrato(saldo, /, *, extrato):
     print("Extrato\n\n")
     actions = "\n".join(i for i in extrato)
-    print(f'Suas atividades:\n{actions}\n\nSeu saldo atual é de R${float(saldo):.2f}')
+    print(f"Suas atividades:\n{actions}\n\nSeu saldo atual é de R${float(saldo):.2f}")
 
 
 def checar_usuario(cpf, usuarios):
@@ -112,10 +113,9 @@ def criar_usuario(usuarios):
     nascimento = input("Informe sua data de nascimento")
     endereco = input("Informe seu endereço")
 
-    usuarios.append({"nome": nome,
-                     "cpf": cpf,
-                     "nascimento": nascimento,
-                     "endereco": endereco})
+    usuarios.append(
+        {"nome": nome, "cpf": cpf, "nascimento": nascimento, "endereco": endereco}
+    )
 
 
 def criar_conta(AGENCIA, usuarios, contas):
@@ -124,9 +124,13 @@ def criar_conta(AGENCIA, usuarios, contas):
 
     if usuario:
         print("A Conta foi criada com sucesso!")
-        contas.append({"agencia": AGENCIA,
-                       "usuario": [user for user in usuarios if user["cpf"] == cpf][0],
-                       "numero_conta": (len(contas)+1)})
+        contas.append(
+            {
+                "agencia": AGENCIA,
+                "usuario": [user for user in usuarios if user["cpf"] == cpf][0],
+                "numero_conta": (len(contas) + 1),
+            }
+        )
     else:
         print("Usuário não encontrado! Tente novamente!")
 
